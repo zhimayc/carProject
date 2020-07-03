@@ -3,7 +3,9 @@ import Vue from 'vue'
 import App from './App'
 // 引入路由信息
 import VueRouter from 'vue-router'
+import Mint from 'mint-ui'   //按需引入部分组件
 Vue.use(VueRouter)
+Vue.use(Mint)
 import routes from './router'
 const router = new VueRouter({
   //mode: 'history',
@@ -31,9 +33,9 @@ axios.defaults.withcredentials = true
  * 统一设置后台请求地址
  * 设置请求地址：config文件夹下的request.json
  */
- //axios.defaults.baseURL = 'http://127.0.0.1:8099/refillCard/'//本地
-//axios.defaults.baseURL = 'http://www.zhangrong123131.top/refillCard/'//本地
-axios.defaults.baseURL = 'http://www.zhimayc.com/refillCard/'// 测试
+// axios.defaults.baseURL = 'http://192.168.0.11:8099/refillCard/'//本地
+axios.defaults.baseURL = 'http://www.zhangrong123131.top/refillCard/'//本地
+// axios.defaults.baseURL = 'http://www.zhimayc.com/refillCard/'// 测试
 Vue.prototype.$axios = axios
 
 //POST传参序列化(添加请求拦截器)，该序列化方式也是根据实际情况加与不加
