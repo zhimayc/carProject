@@ -3,9 +3,9 @@
     <Header></Header>
     <div class="container distributor-container">
       <div class="distributor-info-wrap">
-        <span>代理ID:{{extensioUserInfo.extensioNumber}}</span>
-         <span>经营区域：{{extensioUserInfo.area}}</span>
-        <span>返佣点数：{{extensioUserInfo.rebate}}</span>
+        <span>代理ID:12324354654</span>
+         <span>经营区域：湖南省-长沙市-岳麓区</span>
+        <span>返佣点数：35%</span>
       </div>
       <div class="distributor-entry-wrap">
         <div
@@ -39,31 +39,32 @@ export default {
         {
           id: 1,
           title: "优惠卡列表",
-          path: "/discountCardList"
+          path: "/discountCardInfo"
         },
         {
           id: 2,
           title: "用户列表",
-          path: "/agentUserList"
+          path: "/userList"
+          // path: "/agentUserList"
         },
         {
           id: 3,
           title: "创建推广员",
-          path: "/creatcustomer"
+          // path: "/creatcustomer"
+          path: "/createAgent"
         },
         {
           id: 4,
           title: "推广员列表",
-          path: "/customerList"
+          // path: "/customerList"
+          path: "/agentList"
         }
         
-      ],
-      extensioUserInfo:{},
+      ]
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "代理员管理");
-    this.getExtensioUserInfo();
   },
   beforeCreate() {},
   computed: {},
@@ -71,14 +72,6 @@ export default {
     goAgentPage(item) {
       this.$router.push(item.path)
       //window.location.reload();//此处需手动刷新
-    },
-    getExtensioUserInfo(){
-      this.$axios.post("/extensio/rebate/info",{}).then(response => {
-        if (response.data.retCode == "0") {
-          this.extensioUserInfo = response.data.data;
-        }
-        console.log(this.extensioUserInfo, "999999");
-      });
     }
   }
 };
