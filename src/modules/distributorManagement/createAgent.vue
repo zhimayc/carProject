@@ -2,7 +2,38 @@
   <div class="createAgent" scoped>
     <Header></Header>
     <div class="container createAgent-container">
-      我是创建代理/推广员页面！
+      <div class="create-item">
+        <span>用户名：</span>
+        <input type="text"/>
+      </div>
+      <div class="create-item">
+        <span>密码：</span>
+        <input type="password"/>
+      </div>
+      <div class="create-item">
+        <span>手机号：</span>
+        <input type="text"/>
+      </div>
+      <div class="create-item">
+        <span>区域：</span>
+        <input type="text"/>
+      </div>
+      <!-- 判断用户类型 -->
+      <div class="create-item">
+        <span class="fl">级别：</span>
+        <mt-radio
+          class="select-radio"
+          v-model="value"
+          :options="['代理', '推广员']">
+        </mt-radio>
+      </div>
+      <div class="create-item return-support">
+        <span>返拥点数：</span>
+        <input type="text"/>&nbsp;%
+      </div>
+      <div class="recharge-btn-wrap login-btn-wrap">
+        <button>创建</button>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +49,7 @@ export default {
   },
   data() {
     return {
-    
+      value: '代理'
     };
   },
   mounted() {
@@ -44,5 +75,51 @@ export default {
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  .create-item {
+    margin:15px 0;
+    height: 36px;
+    line-height: 36px;
+    &.return-support {
+      input {
+        width: 80px;
+      }
+    }
+    &>span {
+      width: 70px;
+      display: inline-block;
+    }
+    &>input{
+      height: 36px;
+      width: calc(100% - 80px);
+      border:1px solid #dddddd;
+      padding:0 5px;
+      border-radius: 5px;
+    }
+    &>.select-radio {
+      width: 240px;
+      height: 36px;
+      line-height: 36px;
+      display: inline-block;
+      .mint-radiolist-title {
+        margin: 0;
+      }
+      .mint-cell {
+        width: 120px;
+        min-height: 36px;
+        line-height: 36px;
+        float: left;
+        background-image: none;
+        .mint-cell-wrapper {
+          margin: 0;
+          padding: 0;
+          border: none!important;
+          background-image: none;
+        }
+      }
+      .mint-radio {
+        width: 20px!important;
+      }
+    }
+  }
 }
 </style>

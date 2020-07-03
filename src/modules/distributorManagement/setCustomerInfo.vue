@@ -2,7 +2,18 @@
   <div class="setCustomerInfo">
     <Header></Header>
     <div class="container setCustomerInfo-container">
-      我是设置客服信息页面！
+      <div class="customer-line">
+        <p class="fl">客服电话：</p>
+        <input type="text" class="myinput">
+      </div>
+      <div class="customer-line">
+        <p class="fl">客服微信：</p>
+        <input type="text" class="myinput">
+        <!-- <div class="fl"><mt-field v-model="customerWec" class="myinput"></mt-field></div> -->
+      </div>
+      <div class="recharge-btn-wrap">
+        <button>确定</button>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +29,8 @@ export default {
   },
   data() {
     return {
-    
+      customerTel: '',
+      customerWec: ''
     };
   },
   mounted() {
@@ -43,5 +55,21 @@ export default {
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  .customer-line {
+    height: 35px;
+    margin: 0 10px 15px;
+    &>p {
+      width: 75px;
+      line-height: 35px;
+    }
+    .myinput {
+      width: calc(100% - 75px);
+      height: 35px;
+      line-height: 35px;
+      padding: 0 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  }
 }
 </style>

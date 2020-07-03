@@ -3,8 +3,8 @@
     <Header></Header>
     <div class="container distributor-container">
       <div class="distributor-info-wrap">
-        <span>经销商ID:{{agentUserInfo.agencyNumber}}</span>
-        <span>预存余额：{{agentUserInfo.prepayMoney}}</span>
+        <span>经销商ID:12324354654</span>
+        <span>预存余额：1000</span>
       </div>
       <div class="distributor-entry-wrap">
         <div
@@ -35,11 +35,11 @@ export default {
   data() {
     return {
       distributorEntryList: [
-        // {
-        //   id: 1,
-        //   title: "屯油记录",
-        //   path: "/oilChariotHistory "
-        // },
+        {
+          id: 1,
+          title: "屯油记录",
+          path: "/oilChariotHistory "
+        },
         {
           id: 2,
           title: "优惠卡信息",
@@ -75,30 +75,19 @@ export default {
           title: "设置客服信息",
           path: "/setCustomerInfo "
         }
-      ],
-      agentUserInfo:{},
+      ]
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "经销商管理");
-    this.getAgentUserInfo();
   },
   beforeCreate() {},
   computed: {},
   methods: {
-    getAgentUserInfo(){
-      this.$axios.post("agency/info").then(response => {
-        if (response.data.retCode == "0") {
-          this.agentUserInfo = response.data.data;
-        }
-        console.log(this.agentUserInfo, "66666");
-      });
-    },
     goItemPage(item) {
       this.$router.push(item.path)
       window.location.reload();//此处需手动刷新
-    },
-
+    }
   }
 };
 </script>
