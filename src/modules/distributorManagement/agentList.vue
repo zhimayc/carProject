@@ -39,37 +39,26 @@ export default {
   data() {
     return {
       agentLists: [
-        {
-          "account": "string",
-          "activeCouponNumber": 0,
-          "area": "string",
-          "bindCouponNumber": 0,
-          "extensioNumber": "string",
-          "rebate": 0,
-          "rebateMoneyTotal": 0,
-          "type": 0,
-          "usedCouponNumber": 0
-        },
-        {
-          "account": "string",
-          "activeCouponNumber": 0,
-          "area": "string",
-          "bindCouponNumber": 0,
-          "extensioNumber": "string",
-          "rebate": 0,
-          "rebateMoneyTotal": 0,
-          "type": 0,
-          "usedCouponNumber": 0
-        }
       ]
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "代理/推广员列表");
+    this.getExtentAgent();
   },
   beforeCreate() {},
   computed: {},
-  methods: {}
+  methods: {
+    getExtentAgent(){
+      this.$axios.post("/agency/extensio/agent/list",{}).then(response => {
+        if (response.data.retCode == "0") {
+          this.agentLists = response.data.data;
+        }
+        console.log(this.agentLists, "66666");
+      });
+    }
+
+  }
 };
 </script>
 

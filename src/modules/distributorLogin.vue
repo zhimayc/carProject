@@ -49,7 +49,7 @@ export default {
           }else if(response.data.data.type == 3){
             this.$router.push("/agentManagement");
           }else if(response.data.data.type == 4){
-            this.$router.push("/customerList");
+            this.$router.push("/expandManagement");
           }
 
         }

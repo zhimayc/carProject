@@ -4,11 +4,25 @@
     <div class="container discountCardInfo-container">
       <!-- 使用总览 -->
       <ul class="discount-num">
-        <li v-for="(item, index) in discountCardsNum" :key="index">
-          <div>{{discountCardsNum[index].num}}张</div>
+        <li>
+          <div>{{discountCardsNum.bindCouponNumber}}张</div>
           <div>
             <p>优惠券</p>
-            <p>{{discountCardsNum[index].txt}}</p>
+            <p>总发行量</p>
+          </div>
+        </li>
+        <li>
+          <div>{{discountCardsNum.activeCouponNumber}}张</div>
+          <div>
+            <p>优惠券</p>
+            <p>已激活量</p>
+          </div>
+        </li>
+        <li >
+          <div>{{discountCardsNum.usedCouponNumber}}张</div>
+          <div>
+            <p>优惠券</p>
+            <p>已使用量</p>
           </div>
         </li>
       </ul>
@@ -31,7 +45,7 @@
           </div>
           <div class="list-icon fr">
             <div><span>down</span>下载</div>
-            <div><span>人</span>张三</div>
+            <div><span>人</span>{{cardLists[index].name}}</div>
           </div>
         </li>
       </ul>
@@ -50,8 +64,8 @@ export default {
   },
   data() {
     return {
-      discountCardsNum: [
-        {
+      discountCardsNum: {}
+        /*{
           txt: '总发行量',
           num: 10000
         },
@@ -63,9 +77,9 @@ export default {
           txt: '已使用量',
           num: 500
         }
-      ],
+      ]*/,
       cardLists: [
-        {
+        /*{
           "activaNumber": 0,
           "couponCardCode": "string",
           "couponNumber": 0,
@@ -88,16 +102,37 @@ export default {
           "name": "string",
           "promotionUrl": "string",
           "usedNumber": 0
-        }
+        }*/
       ]
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "优惠卡信息");
+    this.getCouponInfo();
+    this.getCouponList();
+
   },
   beforeCreate() {},
   computed: {},
-  methods: {}
+  methods: {
+      getCouponInfo() {
+        this.$axios.post("/agency/info").then(response => {
+          if (response.data.retCode == "0") {
+            this.discountCardsNum = response.data.data;
+          }
+          console.log(this.discountCardsNum, "66666");
+        });
+      },
+    getCouponList(){
+      this.$axios.post("/agency/coupon/card/list",{}).then(response => {
+        if (response.data.retCode == "0") {
+          this.cardLists = response.data.data;
+        }
+        console.log(this.cardLists, "66666");
+      });
+    }
+
+  }
 };
 </script>
 

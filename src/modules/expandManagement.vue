@@ -18,7 +18,7 @@
             <div class="t-item-detail">
               <span class="t-detail-msg">{{item.currDate}}</span>
               <div class="t-item-status">
-                <span>当日返点{{item.rebate}}</span>
+                <span>当日返点{{item.rebate}}%</span>
               </div>
             </div>
             <!-- 下面一行小字 -->
@@ -51,80 +51,34 @@ export default {
   data() {
     return {
       expandManagementInfo: {
-        extensioCode: "111111",
-        account: "12345",
-        area: "谢谢谢谢谢谢谢谢谢",
-        rebate: 0.02,
-        type: 1,
-        bindCouponNumber: 0,
-        activeCouponNumber: 40,
-        usedCouponNumber: 0,
-        rebateMoneyTotal: 0
       },
       rebatelist: [
-        {
-          currDate: "2020-05-31",
-          rebate: 0.02,
-          usedCouponNumber: 1,
-          rebateMoney: 8
-        },
-        {
-          currDate: "2020-06-01",
-          rebate: 0.02,
-          usedCouponNumber: 1,
-          rebateMoney: 8
-        },
-        {
-          currDate: "2020-06-02",
-          rebate: 0.02,
-          usedCouponNumber: 2,
-          rebateMoney: 8
-        },
-        {
-          currDate: "2020-06-03",
-          rebate: 0.02,
-          usedCouponNumber: 3,
-          rebateMoney: 88
-        },
-        {
-          currDate: "2020-06-04",
-          rebate: 0.02,
-          usedCouponNumber: 4,
-          rebateMoney: 888
-        },
-        {
-          currDate: "2020-06-12",
-          rebate: 0.02,
-          usedCouponNumber: 5,
-          rebateMoney: 8888
-        },
-        {
-          currDate: "2020-06-05",
-          rebate: 0.02,
-          usedCouponNumber: 6,
-          rebateMoney: 88
-        },
-        {
-          currDate: "2020-06-06",
-          rebate: 0.02,
-          usedCouponNumber: 7,
-          rebateMoney: 8
-        },
-        {
-          currDate: "2020-06-15",
-          rebate: 0.02,
-          usedCouponNumber: 8,
-          rebateMoney: 9
-        }
       ]
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "推广员管理");
+    this.getExpandInfo();
+    this.getExpandList();
   },
   beforeCreate() {},
   computed: {},
-  methods: {}
+  methods: {
+    getExpandInfo(){
+      this.$axios.post("/agency/info").then(response => {
+        if (response.data.retCode == "0") {
+          this.expandManagementInfo = response.data.data;
+        }
+      });
+    },
+    getExpandList(){
+      this.$axios.post("/extensio/rebate/list").then(response => {
+        if (response.data.retCode == "0") {
+          this.rebatelist = response.data.data;
+        }
+      });
+    }
+  }
 };
 </script>
 

@@ -3,8 +3,8 @@
     <Header></Header>
     <div class="container distributor-container">
       <div class="distributor-info-wrap">
-        <span>经销商ID:12324354654</span>
-        <span>预存余额：1000</span>
+        <span>经销商ID:{{agentMessage.agencyNumber}}</span>
+        <span>预存余额：{{agentMessage.prepayMoney}}</span>
       </div>
       <div class="distributor-entry-wrap">
         <div
@@ -34,6 +34,7 @@ export default {
   },
   data() {
     return {
+      agentMessage:{},
       distributorEntryList: [
         {
           id: 1,
@@ -80,6 +81,7 @@ export default {
   },
   mounted() {
     Bus.$emit("currentTitle", "经销商管理");
+    this.getAgentMessage();
   },
   beforeCreate() {},
   computed: {},
@@ -87,6 +89,15 @@ export default {
     goItemPage(item) {
       this.$router.push(item.path)
       window.location.reload();//此处需手动刷新
+    },
+    getAgentMessage(){
+      this.$axios.post("agency/info").then(response => {
+        if (response.data.retCode == "0") {
+          this.agentMessage = response.data.data;
+        }
+        console.log(this.agentMessage, "66666");
+
+      });
     }
   }
 };

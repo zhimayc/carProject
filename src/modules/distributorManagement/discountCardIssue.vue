@@ -5,25 +5,27 @@
       <div class="faceVal-range">
         <p class="left-tip fl">选择面值</p>
         <ul>
-          <li v-for="(item, index) in faceValRange" :key="index">{{faceValRange[index]}}</li>
+          <li><input name="faceValue" type="radio"v value="8">8元面值，包含1张8元优惠券</li>
+          <li><input name="faceValue" type="radio"  value="50">50元面值，包含7张8元优惠券</li>
+          <li><input name="faceValue" type="radio" value="100">100元面值，包含13张8元优惠券</li>
         </ul>
       </div>
       <div class="faceVal-num">
         <p class="left-tip fl">发行数量</p>
         <div class="num-inp-wrap">
-          <input type="text" placeholder="请输入手机号码" />
+          <input type="text" v-model="couponNumber" placeholder="请输入数量" />
         </div>
       </div>
       <div class="faceVal-bind">
         <p class="left-tip fl">绑定代理/推广员</p>
         <mt-radio
           class="select-radio"
-          v-model="value"
+          v-model="bindType"
           :options="['是', '否']">
         </mt-radio>
       </div>
       <div class="recharge-btn-wrap">
-        <button>确认发行</button>
+        <button @click="sureSend();">确认发行</button>
       </div>
     </div>
   </div>
@@ -40,20 +42,39 @@ export default {
   },
   data() {
     return {
-      value: "是",
-      faceValRange: [
-        '8元面值，包含1张8元优惠券',
-        '50元面值，包含1张50元优惠券',
-        '100元面值，包含1张100元优惠券'
-      ]
+      bindType: 3,
+      couponNumber:100,
+      extensioCode:"222222",
+      faceValue:100,
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "发行优惠卡");
+
   },
   beforeCreate() {},
   computed: {},
-  methods: {}
+  methods: {
+    sureSend(){
+      let sendInfo = { bindType: this.bindType,couponNumber:this.couponNumber,extensioCode:this.extensioCode,
+        faceValue:this.faceValue};
+      this.$axios.post("/agency/send/coupon/card", sendInfo).then(response => {
+        if (response.data.retCode == "0") {
+          this.$router.push("/distributorManagement");
+          /* if(response.data.data.type == 2){
+             this.$router.push("/distributorManagement");
+           }else if(response.data.data.type == 3){
+             this.$router.push("/agentManagement");
+           }else if(response.data.data.type == 4){
+             this.$router.push("/customerList");
+           }*/
+
+        }
+        console.log( response, "88888");
+      });
+    },
+
+  }
 };
 </script>
 

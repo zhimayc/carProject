@@ -33,8 +33,8 @@ axios.defaults.withcredentials = true
  * 统一设置后台请求地址
  * 设置请求地址：config文件夹下的request.json
  */
-// axios.defaults.baseURL = 'http://192.168.0.11:8099/refillCard/'//本地
-axios.defaults.baseURL = 'http://www.zhangrong123131.top/refillCard/'//本地
+ axios.defaults.baseURL = 'http://127.0.0.1:8099/refillCard/'//本地
+//axios.defaults.baseURL = 'http://www.zhangrong123131.top/refillCard/'//本地
 // axios.defaults.baseURL = 'http://www.zhimayc.com/refillCard/'// 测试
 Vue.prototype.$axios = axios
 

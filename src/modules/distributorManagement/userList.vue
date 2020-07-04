@@ -4,10 +4,16 @@
     <div class="container userList-container">
       <!-- 用户量总览 -->
       <ul class="user-num">
-        <li v-for="(item, index) in usersNum" :key="index">
-          <div>{{usersNum[index].num}}人</div>
+        <li >
+          <div>{{usersNum.totalUserNumber}}人</div>
           <div>
-            <p>{{usersNum[index].txt}}</p>
+            <p>历史用户量</p>
+          </div>
+        </li>
+        <li >
+          <div>{{usersNum.nowUserNumber}}人</div>
+          <div>
+            <p>剩余用户量</p>
           </div>
         </li>
       </ul>
@@ -35,62 +41,39 @@ export default {
   },
   data() {
     return {
-      usersNum: [
-        {
-          txt: '历史用户量',
-          num: 10000
-        },
-        {
-          txt: '剩余用户量',
-          num: 500
-        }
-      ],
+      usersNum:{},
       userLists: [
-        {
-          "couponTotal": 0,
-          "name": "string",
-          "rate": "88",
-          "remainingCoupon": 0
-        },
-        {
-          "couponTotal": 0,
-          "name": "string",
-          "rate": "88",
-          "remainingCoupon": 0
-        },
-        {
-          "couponTotal": 0,
-          "name": "string",
-          "rate": "88",
-          "remainingCoupon": 0
-        },
-        {
-          "couponTotal": 0,
-          "name": "string",
-          "rate": "88",
-          "remainingCoupon": 0
-        },
-        {
-          "couponTotal": 0,
-          "name": "string",
-          "rate": "88",
-          "remainingCoupon": 0
-        },
-        {
-          "couponTotal": 0,
-          "name": "string",
-          "rate": "100",
-          "remainingCoupon": 0
-        }
+
       ]
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "用户列表");
+    this.getUserInfo();
+    this.getUserList();
   },
-  beforeCreate() {},
+  beforeCreate() {
+
+  },
   computed: {},
-  methods: {}
+  methods: {
+    getUserInfo() {
+      this.$axios.post("/agency/user/total").then(response => {
+        if (response.data.retCode == "0") {
+          this.usersNum = response.data.data;
+        }
+        console.log(this.usersNum, "66666");
+      });
+    },
+    getUserList(){
+      this.$axios.post("/agency/user/list",{}).then(response => {
+        if (response.data.retCode == "0") {
+          this.userLists = response.data.data;
+        }
+        console.log(this.userLists, "66666");
+      });
+    }
+  }
 };
 </script>
 

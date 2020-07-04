@@ -4,15 +4,15 @@
     <div class="container setCustomerInfo-container">
       <div class="customer-line">
         <p class="fl">客服电话：</p>
-        <input type="text" class="myinput">
+        <input type="text" v-model="servicePhone" class="myinput">
       </div>
       <div class="customer-line">
         <p class="fl">客服微信：</p>
-        <input type="text" class="myinput">
+        <input type="text" v-model="serviceWeixin" class="myinput">
         <!-- <div class="fl"><mt-field v-model="customerWec" class="myinput"></mt-field></div> -->
       </div>
       <div class="recharge-btn-wrap">
-        <button>确定</button>
+        <button @click="updateService();">确定</button>
       </div>
     </div>
   </div>
@@ -29,8 +29,8 @@ export default {
   },
   data() {
     return {
-      customerTel: '',
-      customerWec: ''
+      servicePhone: '',
+      serviceWeixin: ''
     };
   },
   mounted() {
@@ -38,7 +38,21 @@ export default {
   },
   beforeCreate() {},
   computed: {},
-  methods: {}
+  methods: {
+
+    updateService(){
+      let serviceInfo = { servicePhone: this.servicePhone,serviceWeixin:this.serviceWeixin};
+      console.log(serviceInfo,"222");
+      this.$axios.post("/agency/set/service/info", serviceInfo).then(response => {
+        if (response.data.retCode == "0") {
+            this.$router.push("/distributorManagement");
+        }
+
+      });
+
+    }
+
+  }
 };
 </script>
 

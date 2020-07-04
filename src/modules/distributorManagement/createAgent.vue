@@ -4,35 +4,35 @@
     <div class="container createAgent-container">
       <div class="create-item">
         <span>用户名：</span>
-        <input type="text"/>
+        <input type="text" v-model="account"/>
       </div>
       <div class="create-item">
         <span>密码：</span>
-        <input type="password"/>
+        <input type="password" v-model="password"/>
       </div>
       <div class="create-item">
         <span>手机号：</span>
-        <input type="text"/>
+        <input type="text" v-model="phone"/>
       </div>
       <div class="create-item">
         <span>区域：</span>
-        <input type="text"/>
+        <input type="text" v-model="area"/>
       </div>
       <!-- 判断用户类型 -->
       <div class="create-item">
         <span class="fl">级别：</span>
         <mt-radio
           class="select-radio"
-          v-model="value"
-          :options="['代理', '推广员']">
+          v-model="type"
+          :options="['1', '2']">
         </mt-radio>
       </div>
       <div class="create-item return-support">
         <span>返拥点数：</span>
-        <input type="text"/>&nbsp;%
+        <input type="text" v-model="rebate"/>&nbsp;%
       </div>
       <div class="recharge-btn-wrap login-btn-wrap">
-        <button>创建</button>
+        <button @click="createAgent();">创建</button>
       </div>
     </div>
   </div>
@@ -49,7 +49,12 @@ export default {
   },
   data() {
     return {
-      value: '代理'
+      account: "",
+      area: "",
+      password: "",
+      phone: "",
+      type: 0,
+      rebate: "",
     };
   },
   mounted() {
@@ -57,7 +62,26 @@ export default {
   },
   beforeCreate() {},
   computed: {},
-  methods: {}
+  methods: {
+    createAgent(){
+      let agentInfo = { account: this.account,password:this.password,
+        area:this.area,phone:this.phone,type:this.type,rebate:this.rebate};
+      this.$axios.post("/agency/create/extensio/agent", agentInfo).then(response => {
+        if (response.data.retCode == "0") {
+          if(response.data.data.type == "2"){
+            this.$router.push("/distributorManagement");
+          }else if(response.data.data.type == "3"){
+            this.$router.push("/agentManagement");
+          }else if(response.data.data.type == "4"){
+            this.$router.push("/expandManagement");
+
+          }
+        }
+        console.log( response, "88888");
+      });
+    }
+
+  }
 };
 </script>
 
