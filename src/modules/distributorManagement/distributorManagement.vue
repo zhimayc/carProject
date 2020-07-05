@@ -36,11 +36,11 @@ export default {
     return {
       agentMessage:{},
       distributorEntryList: [
-        {
+        /*{
           id: 1,
           title: "屯油记录",
           path: "/oilChariotHistory "
-        },
+        },*/
         {
           id: 2,
           title: "优惠卡信息",

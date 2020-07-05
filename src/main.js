@@ -13,12 +13,14 @@ const router = new VueRouter({
   routes
 })
 // 引入ui组件（mint-ui）
-import { Swipe, SwipeItem,Header,Cell } from 'mint-ui';   //按需引入部分组件
+import { Swipe, SwipeItem,Header,Cell,Toast} from 'mint-ui';   //按需引入部分组件
 
 Vue.component(Cell.name, Cell);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Header.name, Header);
+// Vue.component(Indicator);
+//Vue.use(Toast);
 // 引入css
 import './common/css/comm.less';
 Vue.config.productionTip = false
@@ -33,9 +35,9 @@ axios.defaults.withcredentials = true
  * 统一设置后台请求地址
  * 设置请求地址：config文件夹下的request.json
  */
- axios.defaults.baseURL = 'http://127.0.0.1:8099/refillCard/'//本地
+// axios.defaults.baseURL = 'http://127.0.0.1:8099/refillCard/'//本地
 //axios.defaults.baseURL = 'http://www.zhangrong123131.top/refillCard/'//本地
-// axios.defaults.baseURL = 'http://www.zhimayc.com/refillCard/'// 测试
+ axios.defaults.baseURL = 'http://www.zhimayc.com/refillCard/'// 测试
 Vue.prototype.$axios = axios
 
 //POST传参序列化(添加请求拦截器)，该序列化方式也是根据实际情况加与不加
@@ -50,11 +52,11 @@ axios.interceptors.request.use((config) => {
   }
   return config;
 }, (error) => {
-  Toast({
-    message: '传参错误，请检查！',
-    duration: 1500,
-    iconClass: "icon icon-success"
-  });
+  // Toast({
+  //   message: '传参错误，请检查！',
+  //   duration: 1500,
+  //   iconClass: "icon icon-success"
+  // });
   return Promise.reject(error);
 });
 

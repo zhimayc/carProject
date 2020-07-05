@@ -7,10 +7,10 @@
           <div class="agent-info">
             <div class="info-img fl">
               <img src="/">
-              <p>{{agentLists[index].type}}</p>
+              <p>{{agentLists[index].type == "1"?"代理商":"推广员"}}</p>
             </div>
             <div class="info-main fl">
-              <p>{{agentLists[index].account}}<span class="freeze-account fr">冻结</span></p>
+              <p>{{agentLists[index].account}}<span class="freeze-account fr">正常</span></p>
               <p>{{agentLists[index].area}}&nbsp;{{agentLists[index].extensioNumber}}</p>
               <p>返佣点数{{agentLists[index].rebate}}%</p>
             </div>

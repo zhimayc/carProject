@@ -19,7 +19,7 @@
         <mt-radio
           class="select-radio"
           v-model="bindType"
-          :options="selectOptions">
+          :options="selectOptions" @click="getSelectList();" >
         </mt-radio>
       </div>
       <div class="promoter-select">
@@ -29,7 +29,7 @@
         </div>
         <!-- 推广员弹框 -->
         <mt-popup v-model="popupVisible" popup-transition="popup-fade" closeOnClickModal="true" position="bottom" style="width:100%">
-          <mt-picker :slots="popupSlots" @change="onValuesChange"  showToolbar>
+          <mt-picker :slots="popupSlots" @change="onValuesChange" valueKey="name"  showToolbar>
             <div class="picker-toolbar-title">
               <div class="usi-btn-cancel" @click="popupVisible = !popupVisible">取消</div>
               <div>请选择推广员</div>
@@ -56,17 +56,17 @@ export default {
   },
   data() {
     return {
-      bindType: '3',
+      bindType: '1',
       selectOptions : [{
 		    label: '是',
-		    value: '3'
+		    value: '1'
 			},
 			{
 		    label: '否',
-		    value: '4'
+		    value: '2'
 			}],
-      couponNumber:100,
-      extensioCode:"222222",
+      couponNumber:"",
+      extensioCode:"",
       faceValue:100,
       faceValRange: [
         '8元面值，包含1张8元优惠券',
@@ -76,11 +76,12 @@ export default {
       faceValIndex: 2,
       promoterSelect: '', // 当前推广人员
       promoterSelectVal: '', // 当前推广人员-改变后的
+      promoterSelectValue:'',
       popupVisible: false, // 推广人员选择弹框
       popupSlots: [ // 推广人员选择弹框数据
         {
           values:[
-            '张三','李四','王麻子','。。。'
+            {name:'',value:''}
           ]
         }
       ]
@@ -88,10 +89,20 @@ export default {
   },
   mounted() {
     Bus.$emit("currentTitle", "发行优惠卡");
+    this.getSelectList();
   },
   beforeCreate() {},
   computed: {},
   methods: {
+    //
+    getSelectList(){
+      this.$axios.post("/agency/extensio/list/select",{type:this.bindType}).then(response => {
+        if (response.data.retCode == "0") {
+          this.popupSlots[0].values = response.data.data;
+        }
+        console.log(this.personInfo, "66666");
+      });
+    },
     // 确认发行
     sureSend(){
       let sendInfo = { bindType: this.bindType,couponNumber:this.couponNumber,extensioCode:this.extensioCode,faceValue:this.faceValue};
@@ -99,13 +110,6 @@ export default {
       this.$axios.post("/agency/send/coupon/card", sendInfo).then(response => {
         if (response.data.retCode == "0") {
           this.$router.push("/distributorManagement");
-          /* if(response.data.data.type == 2){
-             this.$router.push("/distributorManagement");
-           }else if(response.data.data.type == 3){
-             this.$router.push("/agentManagement");
-           }else if(response.data.data.type == 4){
-             this.$router.push("/customerList");
-           }*/
         }
         console.log( response, "88888");
       });
@@ -114,6 +118,8 @@ export default {
     modifyFaceVal(e) {
       if (e.target.nodeName == 'LI') {
         let currentIndex = e.target.attributes.currentindex.nodeValue;
+        console.log(currentIndex,"------")
+
         this.faceValIndex = currentIndex
         this.faceValue = currentIndex==0?8:(this.faceValIndex==1?50:100)
       }
@@ -121,15 +127,24 @@ export default {
     // 打开推广人员选择弹框
     openPromoterSelect(){
       this.popupVisible = true;
+
+
     },
     // 推广人员选择弹框点击确认
     popupOk(){
       this.promoterSelect = this.promoterSelectVal;
       this.popupVisible = false;
+      this.extensioCode = this.promoterSelectValue;
+      console.log(this.extensioCode,"extensioCode")
+
     },
     //推广人员选择的弹框picker值发生改变
     onValuesChange(picker, values){
-      this.promoterSelectVal = values[0];
+      this.promoterSelectVal = values[0].name;
+      this.promoterSelectValue = values[0].value;
+      console.log(this.promoterSelectVal,"99999999999")
+      console.log(this.promoterSelectValue,"99999999999")
+
     }
   }
 };

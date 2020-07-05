@@ -24,7 +24,8 @@ let routes = [{
           title: "个人中心",
           keepAlive: false
         }
-      }
+      },
+
 
     ]
   },
@@ -34,6 +35,14 @@ let routes = [{
     component: (resolve) => require(["./../modules/oilCardRecharge.vue"], resolve),
     meta: {
       title: "油卡充值",
+    }
+  },
+  {
+    path: "/oilCardBound",
+    name: "oilCardBound",
+    component: (resolve) => require(["./../modules/oilCardBound.vue"], resolve),
+    meta: {
+      title: "绑定油卡",
     }
   },
   {

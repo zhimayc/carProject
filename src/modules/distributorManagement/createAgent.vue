@@ -24,7 +24,7 @@
         <mt-radio
           class="select-radio"
           v-model="type"
-          :options="['1', '2']">
+          :options="options" @change="check">
         </mt-radio>
       </div>
       <div class="create-item return-support">
@@ -53,8 +53,18 @@ export default {
       area: "",
       password: "",
       phone: "",
-      type: 0,
+      type: "",
       rebate: "",
+      options:[
+        {
+          label: '代理员',
+          value: '1'
+        },
+        {
+          label: '推广员',
+          value: '2'
+        }
+      ],
     };
   },
   mounted() {
@@ -63,6 +73,12 @@ export default {
   beforeCreate() {},
   computed: {},
   methods: {
+    check(val){
+      this.type= val
+      console.log(val,"999")
+      console.log(this.type)
+    },
+
     createAgent(){
       let agentInfo = { account: this.account,password:this.password,
         area:this.area,phone:this.phone,type:this.type,rebate:this.rebate};
