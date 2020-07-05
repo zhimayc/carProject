@@ -1,8 +1,15 @@
   <template>
   <div class="connect" scoped>
     <Header></Header>
-    <div>
-      我是联系客服页面！
+    <div class="container setCustomerInfo-container">
+      <div class="customer-line">
+        <p class="fl">客服电话：</p>
+        <p class="myIpt fl">XXXXX</p>
+      </div>
+      <div class="customer-line">
+        <p class="fl">客服微信：</p>
+        <p class="myIpt fl">XXXXX</p>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +25,7 @@ export default {
   },
   data() {
     return {
-    
+
     };
   },
   mounted() {
@@ -44,5 +51,19 @@ export default {
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  .customer-line {
+    height: 35px;
+    margin: 0 10px 15px;
+    &>p {
+      width: 75px;
+      line-height: 35px;
+    }
+    .myIpt {
+      width: calc(100% - 75px);
+      height: 35px;
+      line-height: 35px;
+      padding: 0 10px;
+    }
+  }
 }
 </style>
