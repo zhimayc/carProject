@@ -4,10 +4,8 @@
     <div class="container discountCardIssue-container">
       <div class="faceVal-range">
         <p class="left-tip fl">选择面值</p>
-        <ul>
-          <li><input name="faceValue" type="radio"v value="8">8元面值，包含1张8元优惠券</li>
-          <li><input name="faceValue" type="radio"  value="50">50元面值，包含7张8元优惠券</li>
-          <li><input name="faceValue" type="radio" value="100">100元面值，包含13张8元优惠券</li>
+        <ul @click="modifyFaceVal">
+          <li v-for="(item, index) in faceValRange" :key="index" :class="index==faceValIndex?'active':''" :currentIndex="index">{{faceValRange[index]}}</li>
         </ul>
       </div>
       <div class="faceVal-num">
@@ -21,8 +19,24 @@
         <mt-radio
           class="select-radio"
           v-model="bindType"
-          :options="['是', '否']">
+          :options="selectOptions">
         </mt-radio>
+      </div>
+      <div class="promoter-select">
+        <div class="select-container fr" @click="openPromoterSelect">
+          <p class="fl">{{promoterSelect?promoterSelect:'选择推广员'}}</p>
+          <img class="fr" src="../../assets/images/arrow_right.png"/>
+        </div>
+        <!-- 推广员弹框 -->
+        <mt-popup v-model="popupVisible" popup-transition="popup-fade" closeOnClickModal="true" position="bottom" style="width:100%">
+          <mt-picker :slots="popupSlots" @change="onValuesChange"  showToolbar>
+            <div class="picker-toolbar-title">
+              <div class="usi-btn-cancel" @click="popupVisible = !popupVisible">取消</div>
+              <div>请选择推广员</div>
+              <div class="usi-btn-sure" @click="popupOk()">确定</div>
+            </div>
+          </mt-picker>
+        </mt-popup>
       </div>
       <div class="recharge-btn-wrap">
         <button @click="sureSend();">确认发行</button>
@@ -42,22 +56,46 @@ export default {
   },
   data() {
     return {
-      bindType: 3,
+      bindType: '3',
+      selectOptions : [{
+		    label: '是',
+		    value: '3'
+			},
+			{
+		    label: '否',
+		    value: '4'
+			}],
       couponNumber:100,
       extensioCode:"222222",
       faceValue:100,
+      faceValRange: [
+        '8元面值，包含1张8元优惠券',
+        '50元面值，包含1张50元优惠券',
+        '100元面值，包含1张100元优惠券'
+      ],
+      faceValIndex: 2,
+      promoterSelect: '', // 当前推广人员
+      promoterSelectVal: '', // 当前推广人员-改变后的
+      popupVisible: false, // 推广人员选择弹框
+      popupSlots: [ // 推广人员选择弹框数据
+        {
+          values:[
+            '张三','李四','王麻子','。。。'
+          ]
+        }
+      ]
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "发行优惠卡");
-
   },
   beforeCreate() {},
   computed: {},
   methods: {
+    // 确认发行
     sureSend(){
-      let sendInfo = { bindType: this.bindType,couponNumber:this.couponNumber,extensioCode:this.extensioCode,
-        faceValue:this.faceValue};
+      let sendInfo = { bindType: this.bindType,couponNumber:this.couponNumber,extensioCode:this.extensioCode,faceValue:this.faceValue};
+        console.log(sendInfo);
       this.$axios.post("/agency/send/coupon/card", sendInfo).then(response => {
         if (response.data.retCode == "0") {
           this.$router.push("/distributorManagement");
@@ -68,12 +106,31 @@ export default {
            }else if(response.data.data.type == 4){
              this.$router.push("/customerList");
            }*/
-
         }
         console.log( response, "88888");
       });
     },
-
+    // 更改面额
+    modifyFaceVal(e) {
+      if (e.target.nodeName == 'LI') {
+        let currentIndex = e.target.attributes.currentindex.nodeValue;
+        this.faceValIndex = currentIndex
+        this.faceValue = currentIndex==0?8:(this.faceValIndex==1?50:100)
+      }
+    },
+    // 打开推广人员选择弹框
+    openPromoterSelect(){
+      this.popupVisible = true;
+    },
+    // 推广人员选择弹框点击确认
+    popupOk(){
+      this.promoterSelect = this.promoterSelectVal;
+      this.popupVisible = false;
+    },
+    //推广人员选择的弹框picker值发生改变
+    onValuesChange(picker, values){
+      this.promoterSelectVal = values[0];
+    }
   }
 };
 </script>
@@ -110,6 +167,9 @@ export default {
         border: 1px solid #ccc;
         border-radius: 10px;
         text-align: center;
+        &.active {
+          background-color: #fbec96;
+        }
       }
     }
   }
@@ -126,14 +186,15 @@ export default {
       }
     }
   }
+  // 绑定类型选择
   .faceVal-bind {
     height: 40px;
     &>p {
       width: 120px;
       line-height: 40px;
-    }    
+    }
     &>.select-radio {
-      width: 180px;
+      width: 160px;
       height: 40px;
       line-height: 40px;
       display: inline-block;
@@ -154,6 +215,38 @@ export default {
       }
       .mint-radio {
         width: 20px!important;
+      }
+    }
+  }
+  // 推广员选择
+  .promoter-select {
+    .select-container {
+      width: 140px;
+      height: 40px;
+      border-bottom: 1px solid #ccc;
+      p {
+        line-height: 40px;
+        padding-left: 10px;
+      }
+      img {
+        width: 10px;
+        margin: 11px 16px 0 0;
+        transform: rotate(90deg);
+      }
+    }
+    // 推广员弹框样式
+    .picker-toolbar-title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #eee;
+      height: 44px;
+      line-height: 44px;
+      font-size: 16px;
+      .usi-btn-cancel, .usi-btn-sure{
+        color:#26a2ff;
+        font-size: 16px;
       }
     }
   }

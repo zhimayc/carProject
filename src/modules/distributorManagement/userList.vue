@@ -19,11 +19,17 @@
       </ul>
       <!-- 用户列表 -->
       <ul class="user-list">
+        <li>
+          <p>用户</p>
+          <p>总数</p>
+          <p>剩余张数</p>
+          <p>使用率</p>
+        </li>
         <li v-for="(item, index) in userLists" :key="index">
-          <p><span>icon</span>{{userLists[index].name}}</p>
-          <p>共<span>{{userLists[index].couponTotal}}</span>张</p>
-          <p>剩余<span>{{userLists[index].remainingCoupon}}</span>张</p>
-          <p>使用率<span>{{userLists[index].rate}}</span>%</p>
+          <p>{{userLists[index].name}}</p>
+          <p>{{userLists[index].couponTotal}}</p>
+          <p>{{userLists[index].remainingCoupon}}</p>
+          <p>{{userLists[index].rate}}%</p>
         </li>
       </ul>
     </div>
@@ -41,9 +47,29 @@ export default {
   },
   data() {
     return {
-      usersNum:{},
+      usersNum: {
+          totalUserNumber: 0,
+          nowUserNumber: 0
+        },
       userLists: [
-
+        {
+          "couponTotal": 1000,
+          "name": "张三三三三三",
+          "rate": "10.88",
+          "remainingCoupon": 888
+        },
+        {
+          "couponTotal": 0,
+          "name": "string",
+          "rate": "0.88",
+          "remainingCoupon": 0
+        },
+        {
+          "couponTotal": 0,
+          "name": "string",
+          "rate": "0.88",
+          "remainingCoupon": 0
+        }
       ]
     };
   },
@@ -52,9 +78,7 @@ export default {
     this.getUserInfo();
     this.getUserList();
   },
-  beforeCreate() {
-
-  },
+  beforeCreate() {},
   computed: {},
   methods: {
     getUserInfo() {
@@ -108,6 +132,7 @@ export default {
   }
   // 用户列表
   .user-list {
+    font-size: 12px;
     &>li {
       height: 40px;
       margin-top: 10px;
@@ -117,9 +142,19 @@ export default {
       border-radius: 10px;
       box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.27);
       background: #ffffff;
+      text-align: center;
       &>p {
+        float: left;
         flex: 1;
         line-height: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        span {
+          width: 30px;
+          display: inline-block;
+          text-align: center;
+        }
       }
     }
   }
