@@ -1,15 +1,17 @@
   <template>
   <div class="oilCardRecharge" scoped>
     <Header></Header>
-    <mt-swipe :auto="4000">
+    <div style="height:150px;">
+    <mt-swipe :auto="4000" >
       <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
         <img :src="item.imageUrl" alt />
       </mt-swipe-item>
     </mt-swipe>
+    </div>
     <div class="billRecharge-container">
       <ul class="oilCard-list-wrap">
         <li class="list-item"
-            :class="{'money-item-active1': activeIndex == index}"
+            :class="{'money-item-active': activeCardIndex == index}"
             v-for="(item,index) in cardList"
             :key="index"
             @click="checkCard(item,index)">
@@ -27,7 +29,7 @@
       <ul class="money-wrap billRecharge-money-wrap">
         <li
           class="money-item"
-          :class="{'money-item-card': activeMoneyIndex == index}"
+          :class="{'money-item-active': activeMoneyIndex == index}"
           v-for="(item,index) in priceList"
           :key="index"
           @click="checkOilPrice(item,index)"
@@ -102,7 +104,7 @@ export default {
       bannerList: [],
       checkCardCode:"",
       checkCardPrice:"",
-      activeIndex:0,
+      activeCardIndex:0,
       activeMoneyIndex:0
     };
   },
@@ -155,7 +157,7 @@ export default {
     checkCard(item,index){
       console.log(item.cardCode);
       this.checkCardCode = item.cardCode;
-      this.activeIndex=index;
+      this.activeCardIndex=index;
     },
     //选择油卡充值金额
     checkOilPrice(item,index){
@@ -307,18 +309,22 @@ export default {
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  .billRecharge-container{
+    flex:1;
+    overflow: auto;
+  }
   .oilCard-list-wrap {
     width: 80%;
     margin: 5px auto;
-    background: #ffffff;
-
     .list-item {
       height: 45px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding:0 3px;
+      background: #ffffff;
       border-radius: 3px;
+      margin-bottom:5px;
     }
   }
   .oilCard-bound-wrap{
@@ -330,11 +336,9 @@ export default {
       color:#c3ac0c;
     }
   }
-  .money-item-active1{
-    background:#fbec96;
+  .money-item-active{
+    background:#fbec96 !important;
   }
-  .money-item-card{
-    background:#fbec96;
-  }
+
 }
 </style>

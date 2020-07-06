@@ -36,8 +36,8 @@ axios.defaults.withcredentials = true
  * 设置请求地址：config文件夹下的request.json
  */
 // axios.defaults.baseURL = 'http://127.0.0.1:8099/refillCard/'//本地
-axios.defaults.baseURL = 'http://www.zhangrong123131.top/refillCard/'//本地
-// axios.defaults.baseURL = 'http://www.zhimayc.com/refillCard/'// 测试
+//axios.defaults.baseURL = 'http://www.zhangrong123131.top/refillCard/'//本地
+ axios.defaults.baseURL = 'http://www.zhimayc.com/refillCard/'// 测试
 Vue.prototype.$axios = axios
 
 //POST传参序列化(添加请求拦截器)，该序列化方式也是根据实际情况加与不加
