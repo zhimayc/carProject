@@ -92,7 +92,7 @@ export default {
       },
       checkPriceValue:"",
       phone:"",
-      activeIndex: 1
+      activeIndex: 0
     };
   },
   mounted() {
@@ -100,6 +100,7 @@ export default {
     this.getCouponNumber();
     this.weixinInit();
     this.getRechargeList();
+    this.checkPrice(this.priceList[0],0);
   },
   beforeCreate() {},
   computed: {},

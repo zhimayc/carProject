@@ -8,7 +8,7 @@
         <span>{{personInfo.name}}</span>
         <div class="ticket">
           <span>优惠券：{{personInfo.remainingCoupon}}张</span>
-          <span>(共{{personInfo.rechargeMoney}}元)</span>
+          <span>(共{{personInfo.remainingCoupon*8}}元)</span>
         </div>
       </div>
     </div>

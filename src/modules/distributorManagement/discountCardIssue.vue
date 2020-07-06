@@ -19,7 +19,7 @@
         <mt-radio
           class="select-radio"
           v-model="bindType"
-          :options="selectOptions" @click="getSelectList();" >
+          :options="selectOptions" @change="getSelectList();" >
         </mt-radio>
       </div>
       <div class="promoter-select">
@@ -48,6 +48,8 @@
 <script>
 import Header from "../../components/header.vue";
 import Bus from "./../../common/js/bus.js";
+import { Indicator } from 'mint-ui';
+
 export default {
   name: "discountCardIssue",
   path: "/discountCardIssue",
@@ -70,8 +72,8 @@ export default {
       faceValue:100,
       faceValRange: [
         '8元面值，包含1张8元优惠券',
-        '50元面值，包含1张50元优惠券',
-        '100元面值，包含1张100元优惠券'
+        '50元面值，包含6张8元优惠券',
+        '100元面值，包含13张8元优惠券'
       ],
       faceValIndex: 2,
       promoterSelect: '', // 当前推广人员
@@ -96,6 +98,8 @@ export default {
   methods: {
     //
     getSelectList(){
+      this.promoterSelect = '选择推广员';
+      this.extensioCode = '';
       this.$axios.post("/agency/extensio/list/select",{type:this.bindType}).then(response => {
         if (response.data.retCode == "0") {
           this.popupSlots[0].values = response.data.data;
@@ -105,11 +109,16 @@ export default {
     },
     // 确认发行
     sureSend(){
+      Indicator.open();
       let sendInfo = { bindType: this.bindType,couponNumber:this.couponNumber,extensioCode:this.extensioCode,faceValue:this.faceValue};
         console.log(sendInfo);
       this.$axios.post("/agency/send/coupon/card", sendInfo).then(response => {
+        Indicator.close();
         if (response.data.retCode == "0") {
+
           this.$router.push("/distributorManagement");
+        }else{
+          this.$toast(response.data.message);
         }
         console.log( response, "88888");
       });

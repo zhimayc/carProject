@@ -9,7 +9,7 @@
     <div class="billRecharge-container">
       <ul class="oilCard-list-wrap">
         <li class="list-item"
-            :class="{'money-item-active': activeIndex == index}"
+            :class="{'money-item-active1': activeIndex == index}"
             v-for="(item,index) in cardList"
             :key="index"
             @click="checkCard(item,index)">
@@ -64,7 +64,7 @@
 import Header from "../components/header.vue";
 import Bus from "./../common/js/bus.js";
 import { Indicator } from 'mint-ui';
-
+import { Toast} from 'mint-ui';
 export default {
   name: "oilCardRecharge",
   path: "/oilCardRecharge",
@@ -102,8 +102,8 @@ export default {
       bannerList: [],
       checkCardCode:"",
       checkCardPrice:"",
-      activeIndex:1,
-      activeMoneyIndex:1
+      activeIndex:0,
+      activeMoneyIndex:0
     };
   },
   mounted() {
@@ -113,6 +113,7 @@ export default {
     this.getCardList();
     this.getCouponNumber();
     this.weixinInit();
+    this.checkOilPrice(this.priceList[0],0);
 
   },
   beforeCreate() {},
@@ -199,6 +200,9 @@ export default {
       this.$axios.post("/base/oil/card/list").then(response => {
         if (response.data.retCode == "0") {
           this.cardList = response.data.data;
+          if(this.cardList != null){
+            this.checkCard(this.cardList[0],0);
+          }
         }
         console.log(this.cardList, "999999");
       });
@@ -254,6 +258,13 @@ export default {
           Toast(response.data.message);
         }
         //console.log(this.cardList, "999999");
+        Indicator.close();
+      }).catch((error)=>{
+          Toast({
+              message: '服务异常！',
+              duration: 1500,
+              iconClass: "icon icon-success"
+            });
         Indicator.close();
       });
     },
@@ -319,7 +330,7 @@ export default {
       color:#c3ac0c;
     }
   }
-  .money-item-active{
+  .money-item-active1{
     background:#fbec96;
   }
   .money-item-card{
