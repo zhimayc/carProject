@@ -90,7 +90,7 @@ export default {
       ticketInfo: {
         remainingCoupon: "0",
         money: "0",
-        num: 0,
+        num: 1,
         countMoney: 0
       },
       checkPriceValue:"",
@@ -117,22 +117,30 @@ export default {
       });
     },
     checkPrice(item,index){
-        console.log(item.price)
+      console.log(item.price)
       this.activeIndex=index;
-        console.log(this.activeIndex,"this.activeIndex")
+      console.log(this.activeIndex,"this.activeIndex")
       this.checkPriceValue = item.price;
-      if(item.price == "100"){
-        this.ticketInfo.num = 1;
-        this.ticketInfo.countMoney=8;
-      }else if(item.price == "200"){
-        this.ticketInfo.num = 2;
-        this.ticketInfo.countMoney=16;
-      }else if(item.price == "300"){
-        this.ticketInfo.num = 3;
-        this.ticketInfo.countMoney=24;
-      }else if(item.price == "500"){
-        this.ticketInfo.num = 5;
-        this.ticketInfo.countMoney=40;
+      // if(item.price == "100"){
+      //   this.ticketInfo.num = 1;
+      //   this.ticketInfo.countMoney=8;
+      // }else if(item.price == "200"){
+      //   this.ticketInfo.num = 2;
+      //   this.ticketInfo.countMoney=16;
+      // }else if(item.price == "300"){
+      //   this.ticketInfo.num = 3;
+      //   this.ticketInfo.countMoney=24;
+      // }else if(item.price == "500"){
+      //   this.ticketInfo.num = 5;
+      //   this.ticketInfo.countMoney=40;
+      // }
+      var number = item.price/100;
+      if(this.ticketInfo.remainingCoupon >= number){
+        this.ticketInfo.num = number;
+        this.ticketInfo.countMoney = number*8;
+      }else{
+        this.ticketInfo.num = this.ticketInfo.remainingCoupon;
+        this.ticketInfo.countMoney = this.ticketInfo.remainingCoupon*8;
       }
     },
     //获取剩余优惠券
