@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div class="discountCardInfo" scoped>
     <Header></Header>
     <div class="container discountCardInfo-container">
@@ -44,12 +44,17 @@
             <p>已使用：<span>{{cardLists[index].usedNumber}}%</span></p>
           </div>
           <div class="list-icon fr">
-            <div><span>down</span>下载</div>
+            <div @click="downCode"><span>down</span>下载</div>
             <div><span>人</span>{{cardLists[index].name}}</div>
           </div>
         </li>
       </ul>
     </div>
+    <mt-popup
+      v-model="popupVisible"
+      position="center">
+      <div class="qrcode" ref="qrCodeUrl"></div>
+    </mt-popup>
   </div>
 </template>
 
@@ -64,6 +69,10 @@ export default {
   },
   data() {
     return {
+      value: 0,
+      size: 150,
+      qrcode: null,
+      popupVisible: false,
       discountCardsNum: {}
         /*{
           txt: '总发行量',
@@ -79,30 +88,30 @@ export default {
         }
       ]*/,
       cardLists: [
-        /*{
-          "activaNumber": 0,
-          "couponCardCode": "string",
-          "couponNumber": 0,
-          "createdDate": "2020-07-02",
-          "expireDate": "2020-07-02",
-          "faceValue": 0,
-          "image": "string",
-          "name": "string",
-          "promotionUrl": "string",
-          "usedNumber": 0
-        },
-        {
-          "activaNumber": 0,
-          "couponCardCode": "string",
-          "couponNumber": 0,
-          "createdDate": "2020-07-02",
-          "expireDate": "2020-07-02",
-          "faceValue": 0,
-          "image": "string",
-          "name": "string",
-          "promotionUrl": "string",
-          "usedNumber": 0
-        }*/
+        // {
+        //   "activaNumber": 0,
+        //   "couponCardCode": "string",
+        //   "couponNumber": 0,
+        //   "createdDate": "2020-07-02",
+        //   "expireDate": "2020-07-02",
+        //   "faceValue": 0,
+        //   "image": "string",
+        //   "name": "string",
+        //   "promotionUrl": "string",
+        //   "usedNumber": 0
+        // },
+        // {
+        //   "activaNumber": 0,
+        //   "couponCardCode": "string",
+        //   "couponNumber": 0,
+        //   "createdDate": "2020-07-02",
+        //   "expireDate": "2020-07-02",
+        //   "faceValue": 0,
+        //   "image": "string",
+        //   "name": "string",
+        //   "promotionUrl": "string",
+        //   "usedNumber": 0
+        // }
       ]
     };
   },
@@ -110,7 +119,6 @@ export default {
     Bus.$emit("currentTitle", "优惠卡信息");
     this.getCouponInfo();
     this.getCouponList();
-
   },
   beforeCreate() {},
   computed: {},
@@ -126,12 +134,39 @@ export default {
     getCouponList(){
       this.$axios.post("/agency/coupon/card/list",{}).then(response => {
         if (response.data.retCode == "0") {
-          this.cardLists = response.data.data;
+          // this.cardLists = response.data.data;
         }
         console.log(this.cardLists, "66666");
       });
+    },
+    // 下载二维码
+    downCode() {
+      console.log('down');
+      // this.downloadFile(fileUrl, fileName)
+    },
+    // 文件下载
+    downloadFile(fileUrl, fileName) {
+      if (!fileUrl) {
+        return
+      }
+      if (window.navigator.msSaveBlob) {  // IE以及IE内核的浏览器
+        try {
+          window.navigator.msSaveBlob(fileUrl, fileName)
+        } catch (e) {
+          console.log(e)
+        }
+      } else {
+        let url = window.URL.createObjectURL(new Blob([fileUrl]))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', fileName)// 文件名
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link) // 下载完成移除元素
+        window.URL.revokeObjectURL(url) // 释放掉blob对象
+      }
     }
-
   }
 };
 </script>
@@ -164,7 +199,6 @@ export default {
         line-height: 50px;
       }
     }
-
   }
   // 记录列表
   .discount-list{
