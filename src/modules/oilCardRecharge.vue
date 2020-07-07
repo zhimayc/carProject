@@ -1,7 +1,7 @@
 <template>
   <div class="oilCardRecharge" scoped>
     <Header></Header>
-    <div style="height:150px;">
+    <div style="height:160px;">
     <mt-swipe :auto="4000" >
       <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
         <img :src="item.imageUrl" alt />
@@ -166,17 +166,17 @@ export default {
       console.log(item.price);
       this.activeMoneyIndex = index;
       this.checkCardPrice = item.price;
-        var number = item.price/100;
-        console.log(number,"122");
+      var number = item.price/100;
+      console.log(number,"122");
       console.log(this.ticketInfo.remainingCoupon);
       if(this.ticketInfo.remainingCoupon >= number){
         console.log("222");
         this.ticketInfo.num = number;
-          this.ticketInfo.countMoney = number*8;
-        }else{
-          this.ticketInfo.num = this.ticketInfo.remainingCoupon;
-          this.ticketInfo.countMoney = this.ticketInfo.remainingCoupon*8;
-        }
+        this.ticketInfo.countMoney = number*8;
+      }else{
+        this.ticketInfo.num = this.ticketInfo.remainingCoupon;
+        this.ticketInfo.countMoney = this.ticketInfo.remainingCoupon*8;
+      }
     },
     // 获取油卡充值轮播图
     getBannerList() {
