@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div class="oilCardRecharge" scoped>
     <Header></Header>
     <div style="height:150px;">
@@ -24,7 +24,7 @@
         </li>
       </ul>
       <div class="oilCard-bound-wrap" @click="toOilCardBound()">
-        <span>油卡绑定</span>
+        <span>油卡绑定&nbsp;+</span>
       </div>
       <ul class="money-wrap billRecharge-money-wrap">
         <li
@@ -48,7 +48,10 @@
       </div>
 
       <div class="container-historyList-wrap">
-        <div class="s-title">历史充值记录</div>
+        <div class="title-info">
+          <span></span>
+          <p>历史充值记录</p>
+        </div>
         <ul class="historyList-wrap">
           <li class="historyList" v-for="(item,index) in rechargeList" :key="index">
             <span>{{item.account}}</span>
@@ -116,7 +119,6 @@ export default {
     this.getCouponNumber();
     this.weixinInit();
     this.checkOilPrice(this.priceList[0],0);
-
   },
   beforeCreate() {},
   computed: {},
@@ -167,17 +169,14 @@ export default {
         var number = item.price/100;
         console.log(number,"122");
       console.log(this.ticketInfo.remainingCoupon);
-
       if(this.ticketInfo.remainingCoupon >= number){
         console.log("222");
-
         this.ticketInfo.num = number;
           this.ticketInfo.countMoney = number*8;
         }else{
           this.ticketInfo.num = this.ticketInfo.remainingCoupon;
           this.ticketInfo.countMoney = this.ticketInfo.remainingCoupon*8;
         }
-
     },
     // 获取油卡充值轮播图
     getBannerList() {
@@ -209,7 +208,6 @@ export default {
         console.log(this.cardList, "999999");
       });
     },
-
     //获取用户的剩余的优惠券
     getCouponNumber(){
       this.$axios.post("/base/info/user").then(response => {
@@ -222,7 +220,6 @@ export default {
         console.log(this.ticketInfo, "66666");
       });
     },
-
     // 绑定油卡
     toOilCardBound(){
       this.$router.push('/oilCardBound')
@@ -255,7 +252,6 @@ export default {
           } catch (e) {
             console.info('订单支付异常, 请稍后重试。');
           }
-
         }else{
           Toast(response.data.message);
         }
@@ -284,9 +280,7 @@ export default {
               Toast("支付成功！");
             }else{
               clearInterval(this.intervalid1);
-
             }
-
           }
         });
       }, 2000);
@@ -339,6 +333,5 @@ export default {
   .money-item-active{
     background:#fbec96 !important;
   }
-
 }
 </style>

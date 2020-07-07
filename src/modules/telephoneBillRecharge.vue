@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div class="telephoneBillRecharge" scoped>
     <!-- 子路由todo/panorama/concat等的坑 -->
     <Header></Header>
@@ -7,7 +7,7 @@
         <img :src="item" alt />
       </mt-swipe-item>
     </mt-swipe>
-    <div class="billRecharge-container">
+    <div class="container billRecharge-container">
       <div class="billRecharge-inp-wrap">
         <input type="text" v-model="phone" placeholder="请输入手机号码" />
       </div>
@@ -34,7 +34,10 @@
       </div>
 
       <div class="container-historyList-wrap">
-        <div class="s-title">历史充值记录</div>
+        <div class="title-info">
+          <span></span>
+          <p>历史充值记录</p>
+        </div>
         <ul class="historyList-wrap">
           <li class="historyList" v-for="(item,index) in rechargeList" :key="index">
             <span>{{item.account}}</span>
@@ -124,15 +127,12 @@ export default {
       }else if(item.price == "200"){
         this.ticketInfo.num = 2;
         this.ticketInfo.countMoney=16;
-
       }else if(item.price == "300"){
         this.ticketInfo.num = 3;
         this.ticketInfo.countMoney=24;
-
       }else if(item.price == "500"){
         this.ticketInfo.num = 5;
         this.ticketInfo.countMoney=40;
-
       }
     },
     //获取剩余优惠券
@@ -182,12 +182,9 @@ export default {
     },
     //支付
     payPhone(){
-
       Indicator.open();
       let payPhoneInfo = { phone: this.phone,money:this.checkPriceValue}
-
         this.$axios.post("/base/recharg/phone",payPhoneInfo).then(response => {
-
           if (response.data.retCode == "0") {
             //this.$router.push("/homePage");
             let orderNumber = response.data.data.orderNumber;
@@ -231,9 +228,7 @@ export default {
               Toast("支付成功！");
             }else{
               clearInterval(this.intervalid1);
-
             }
-
           }
         });
       }, 2000);

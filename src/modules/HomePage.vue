@@ -31,7 +31,10 @@
         </li>
       </ul>
       <div class="container-historyList-wrap">
-        <div class="s-title">历史充值记录</div>
+        <div class="title-info">
+          <span></span>
+          <p>历史充值记录</p>
+        </div>
         <ul class="historyList-wrap">
           <li class="historyList" v-for="(item,index) in rechargeList" :key="index">
             <span>{{item.account}}</span>
@@ -170,7 +173,6 @@ export default {
         height: 25px;
         width: 25px;
       }
-
       span {
         flex: 1;
         padding-left: 8px;

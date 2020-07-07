@@ -73,8 +73,6 @@ export default {
           console.log(this.personInfo, "66666");
           this.handlePersonEntryTitle(this.personInfo.type);
         });
-
-
     },
     handlePersonEntryTitle(type) {
       if (type == 1) {
@@ -146,18 +144,19 @@ export default {
     padding: 15px;
     li {
       width: 50%;
-      padding:3% 5%;
+      padding:3% 8%;
       .entry-item-wrap {
         background: #f5f5f5;
-        padding: 15px;
+        padding: 8px;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.27);
         img {
-          width: 90px;
-          height: 90px;
+          width: 50px;
+          height: 50px;
           margin-bottom: 10px;
         }
       }
