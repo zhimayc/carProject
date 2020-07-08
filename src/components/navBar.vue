@@ -32,8 +32,8 @@ export default {
           name: "首页",
           path: "/homePage",
           imagesrc: {
-            normal: require("../assets/images/home.png"),
-            selected: require("../assets/images/homeSelect.png")
+            normal: require("../assets/images/home-index.png"),
+            selected: require("../assets/images/home-index-select.png")
           }
         },
         {
@@ -41,8 +41,8 @@ export default {
           name: "个人中心",
           path: "/myCenter",
           imagesrc: {
-            normal: require("../assets/images/center.png"),
-            selected: require("../assets/images/centerSelect.png")
+            normal: require("../assets/images/home-mine.png"),
+            selected: require("../assets/images/home-mine-select.png")
           }
         }
       ]
