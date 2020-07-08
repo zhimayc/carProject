@@ -45,7 +45,7 @@
           </div>
           <div class="list-icon">
             <div class="fr"><img src="../../assets/images/dealer.png"><span class="fr">{{cardLists[index].name}}</span></div>
-            <div class="fr" @click="downCode"><img src="../../assets/images/download-black.png"><span class="fr">下载</span></div>
+            <div class="fr" @click="downCode(cardLists[index].promotionUrl);"><img src="../../assets/images/download-black.png"><span class="fr">下载</span></div>
           </div>
         </li>
       </ul>
@@ -79,30 +79,30 @@ export default {
         }
       ]*/,
       cardLists: [
-        {
-          "activaNumber": 0,
-          "couponCardCode": "string",
-          "couponNumber": 0,
-          "createdDate": "2020-07-02",
-          "expireDate": "2020-07-02",
-          "faceValue": 0,
-          "image": "string",
-          "name": "string",
-          "promotionUrl": "string",
-          "usedNumber": 0
-        },
-        {
-          "activaNumber": 0,
-          "couponCardCode": "string",
-          "couponNumber": 0,
-          "createdDate": "2020-07-02",
-          "expireDate": "2020-07-02",
-          "faceValue": 0,
-          "image": "string",
-          "name": "string",
-          "promotionUrl": "string",
-          "usedNumber": 0
-        }
+        // {
+        //   "activaNumber": 0,
+        //   "couponCardCode": "string",
+        //   "couponNumber": 0,
+        //   "createdDate": "2020-07-02",
+        //   "expireDate": "2020-07-02",
+        //   "faceValue": 0,
+        //   "image": "string",
+        //   "name": "string",
+        //   "promotionUrl": "string",
+        //   "usedNumber": 0
+        // },
+        // {
+        //   "activaNumber": 0,
+        //   "couponCardCode": "string",
+        //   "couponNumber": 0,
+        //   "createdDate": "2020-07-02",
+        //   "expireDate": "2020-07-02",
+        //   "faceValue": 0,
+        //   "image": "string",
+        //   "name": "string",
+        //   "promotionUrl": "string",
+        //   "usedNumber": 0
+        // }
       ]
     };
   },
@@ -125,16 +125,27 @@ export default {
     getCouponList(){
       this.$axios.post("/agency/coupon/card/list",{}).then(response => {
         if (response.data.retCode == "0") {
-          // this.cardLists = response.data.data;
+           this.cardLists = response.data.data;
         }
         console.log(this.cardLists, "66666");
       });
     },
     // 下载二维码
-    downCode() {
-      console.log('down');
-      // this.downloadFile(fileUrl, fileName)
+    downCode(promotionUrl) {
+      console.log(promotionUrl,'down');
+
+
+      this.downloadWithBlob(promotionUrl)
     },
+     downloadWithBlob(url) {
+       const elt = document.createElement('a');
+       elt.setAttribute('href', url);
+       elt.setAttribute('download', 'file.png');
+       elt.style.display = 'none';
+       document.body.appendChild(elt);
+       elt.click();
+},
+
     // 文件下载
     downloadFile(fileUrl, fileName) {
       if (!fileUrl) {

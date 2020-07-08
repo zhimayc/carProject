@@ -4,11 +4,11 @@
     <div class="container setCustomerInfo-container">
       <div class="customer-line">
         <p class="fl">客服电话：</p>
-        <p class="myIpt fl">XXXXX</p>
+        <p class="myIpt fl">{{connectInfo.servicePhone}}</p>
       </div>
       <div class="customer-line">
         <p class="fl">客服微信：</p>
-        <p class="myIpt fl">XXXXX</p>
+        <p class="myIpt fl">{{connectInfo.serviceWeixin}}</p>
       </div>
     </div>
   </div>
@@ -25,15 +25,25 @@ export default {
   },
   data() {
     return {
-
+        connectInfo:{}
     };
   },
   mounted() {
     Bus.$emit("currentTitle", "联系客服");
+    this.getConnect();
   },
   beforeCreate() {},
   computed: {},
-  methods: {}
+  methods: {
+    getConnect(){
+      this.$axios.post("/agency/get/service/info").then(response => {
+        if (response.data.retCode == "0") {
+          this.connectInfo = response.data.data;
+        }
+      });
+    }
+
+  }
 };
 </script>
 

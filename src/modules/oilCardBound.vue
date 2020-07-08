@@ -15,7 +15,7 @@
         <input type="text" v-model="phone" placeholder="请输入卡主手机" />
       </div>
       <div class="tips">
-        <span>请确认油卡无误，否则充值将无法到账！</span>
+        <span>请确认油卡为个人实名中石化主卡，且卡号无误，副卡、车队卡、单位卡充值将无法到账！</span>
       </div>
       <div class="recharge-btn-wrap login-btn-wrap">
         <button @click="bindOilCard();">添加油卡</button>

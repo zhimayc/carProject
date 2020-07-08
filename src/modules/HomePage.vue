@@ -1,11 +1,11 @@
 <template>
   <div class="homePage">
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
-        <img :src="item.imageUrl" alt />
-      </mt-swipe-item>
-    </mt-swipe>
-    <div class="homePage-container">
+    <div class="homepage-top">
+      <mt-swipe :auto="4000">
+        <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
+          <img :src="item.imageUrl" alt />
+        </mt-swipe-item>
+      </mt-swipe>
       <ul class="container-info-wrap">
         <li>
           <span>{{baseUserInfo.rechargeMoney}}</span>
@@ -30,6 +30,8 @@
           <span>{{item.name}}</span>
         </li>
       </ul>
+    </div>
+    <div class="homePage-container">
       <div class="container-historyList-wrap">
         <div class="title-info">
           <span></span>
@@ -45,6 +47,8 @@
         </ul>
       </div>
     </div>
+    <div style="height: 60px"></div>
+
   </div>
 </template>
 
@@ -54,7 +58,7 @@ export default {
   data() {
     return {
       baseUserInfo: {},
-      notice: "重要通知，即日起将进行系统维护！",
+      notice: "芝麻油惠招商火热进行中...",
       entryList: [
         {
           name: "油卡充值",
@@ -121,7 +125,13 @@ export default {
 <style lang='less' scoped>
 .homePage {
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
+  overflow: auto;
+  .homepage-top{
+    position: sticky;
+    top:0;
+    z-index:999;
+  }
   .mint-swipe {
     overflow: hidden;
     position: relative;
@@ -131,80 +141,82 @@ export default {
       height: 100%;
     }
   }
-  .homePage-container {
-    // background: #ffffff;
-    height: 100%;
-    @w: 75rem;
-    .container-info-wrap {
-      position: relative;
-      top: -30px;
-      width: 92%;
-      margin: 0 4%;
-      height: 80px;
-      background: #ffffff;
-      z-index: 999;
-      box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.27);
-      border-radius: 10px;
+  .container-info-wrap {
+    position: relative;
+    top: -30px;
+    width: 92%;
+    margin: 0 4%;
+    height: 80px;
+    background: #ffffff;
+    z-index: 999;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.27);
+    border-radius: 10px;
+    display: flex;
+    li {
+      flex: 1;
       display: flex;
-      li {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        span:last-child {
-          color: #a4a4a4;
-        }
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      span:last-child {
+        color: #a4a4a4;
       }
     }
-    .container-notice-wrap {
-      width: 92%;
-      margin: 0 4%;
-      height: 50px;
-      padding-left: 10px;
-      position: relative;
-      top: -15px;
-      background: #ffffff;
-      z-index: 999;
-      box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.27);
-      border-radius: 10px;
+  }
+  .container-notice-wrap {
+    width: 92%;
+    margin: 0 4%;
+    height: 50px;
+    padding-left: 10px;
+    position: relative;
+    top: -15px;
+    background: #ffffff;
+    z-index: 999;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.27);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    img {
+      height: 25px;
+      width: 25px;
+    }
+    span {
+      flex: 1;
+      padding-left: 8px;
+    }
+  }
+  .container-entry-wrap {
+    display: flex;
+    background: #ffffff;
+    padding: 10px 0;
+    li {
+      flex: 1;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
       img {
-        height: 25px;
-        width: 25px;
+        width: 45px;
+        height: 45px;
       }
-      span {
-        flex: 1;
-        padding-left: 8px;
+      span:last-child {
+        color: #a4a4a4;
       }
-    }
-    .container-entry-wrap {
-      display: flex;
-      background: #ffffff;
-      padding: 10px 0;
-      li {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        img {
-          width: 40px;
-          height: 45px;
-        }
-        span:last-child {
-          color: #a4a4a4;
-        }
-        &:nth-child(2) img {
-          width: 32px;
-        }
-        &:nth-child(3) img {
-          height: 30px;
-          margin: 7px;
-        }
+      &:nth-child(2) img {
+        width: 45px;
+      }
+      &:nth-child(3) img {
+        height: 45px;
+        margin: 7px;
       }
     }
+  }
+  .homePage-container {
+    // background: #ffffff;
+    /*height: 100%;*/
+    @w: 75rem;
+    /*overflow: auto;*/
+
   }
 }
 </style>

@@ -121,6 +121,7 @@ let routes = [{
     meta: {
       title: "屯油记录",
     }
+
   },
   {
     path: "/discountCardInfo",

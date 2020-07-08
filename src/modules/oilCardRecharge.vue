@@ -2,9 +2,9 @@
   <div class="oilCardRecharge" scoped>
     <Header></Header>
     <div style="height:160px;">
-    <mt-swipe :auto="4000" >
-      <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
-        <img :src="item.imageUrl" alt />
+    <mt-swipe :auto="4000" style="height:160px;" >
+      <mt-swipe-item v-for="(item,index) in bannerList" :key="index" style="height:180px;">
+        <img :src="item.imageUrl" style="height:100%;width:100%" alt />
       </mt-swipe-item>
     </mt-swipe>
     </div>

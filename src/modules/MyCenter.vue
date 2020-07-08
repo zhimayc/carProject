@@ -97,7 +97,13 @@ export default {
       }
     },
     toItemPage(item){
-      this.$router.push(item.path)
+      if(item.enterType=='3'){
+        console.log("1111")
+        window.open("https://www.zhimayc.com/");
+      }else{
+        this.$router.push(item.path)
+      }
+
     }
   }
 };

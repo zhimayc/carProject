@@ -3,8 +3,8 @@
     <!-- 子路由todo/panorama/concat等的坑 -->
     <Header></Header>
     <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="(item,index) in pics" :key="index">
-        <img :src="item" alt />
+      <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
+        <img :src="item.imageUrl" alt />
       </mt-swipe-item>
     </mt-swipe>
     <div class="container billRecharge-container">
@@ -63,10 +63,8 @@ export default {
   },
   data() {
     return {
-      pics: [
-        require("../assets/images/banner-phone.png"),
-        require("../assets/images/banner-phone.png"),
-        require("../assets/images/banner-phone.png")
+      bannerList: [
+
       ],
       priceList: [
         {
@@ -104,10 +102,23 @@ export default {
     this.weixinInit();
     this.getRechargeList();
     this.checkPrice(this.priceList[0],0);
+    this.getBannerList();
+
   },
   beforeCreate() {},
   computed: {},
   methods: {
+
+    // 获取油卡充值轮播图
+    getBannerList() {
+      this.$axios.post("/base/banner/list", { type: 2 }).then(response => {
+        if (response.data.retCode == "0") {
+          this.bannerList = response.data.data;
+        }
+        console.log(response, "666666666666666666666666");
+      });
+    },
+
     //获取充值历史
     getRechargeList(){
       this.$axios.post("/base/record/list", { type: 2 }).then(response => {
