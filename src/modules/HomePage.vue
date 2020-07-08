@@ -58,17 +58,18 @@ export default {
       entryList: [
         {
           name: "油卡充值",
-          imgSrc: require("../assets/images/oilCard.png"),
+          imgSrc: require("../assets/images/home-oli.png"),
           path: "/oilCardRecharge"
         },
         {
           name: "话费充值",
-          imgSrc: require("../assets/images/telephoneBill.png"),
+          imgSrc: require("../assets/images/home-telBill.png"),
+          // imgSrc: require("../assets/images/telephoneBill.png"),
           path: "/telephoneBillRecharge"
         },
         {
           name: "注意事项",
-          imgSrc: require("../assets/images/noticeInfo.png"),
+          imgSrc: require("../assets/images/home-notice.png"),
           path: "/noticeInfo"
         }
       ],
@@ -189,11 +190,18 @@ export default {
         justify-content: center;
         align-items: center;
         img {
+          width: 40px;
           height: 45px;
-          width: 45px;
         }
         span:last-child {
           color: #a4a4a4;
+        }
+        &:nth-child(2) img {
+          width: 32px;
+        }
+        &:nth-child(3) img {
+          height: 30px;
+          margin: 7px;
         }
       }
     }

@@ -64,9 +64,9 @@ export default {
   data() {
     return {
       pics: [
-        require("../assets/images/banner.jpg"),
-        require("../assets/images/banner.jpg"),
-        require("../assets/images/banner.jpg")
+        require("../assets/images/banner-phone.png"),
+        require("../assets/images/banner-phone.png"),
+        require("../assets/images/banner-phone.png")
       ],
       priceList: [
         {
