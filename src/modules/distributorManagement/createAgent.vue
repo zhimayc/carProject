@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div class="createAgent" scoped>
     <Header></Header>
     <div class="container createAgent-container">
@@ -78,7 +78,6 @@ export default {
       console.log(val,"999")
       console.log(this.type)
     },
-
     createAgent(){
       let agentInfo = { account: this.account,password:this.password,
         area:this.area,phone:this.phone,type:this.type,rebate:this.rebate};
@@ -90,13 +89,11 @@ export default {
             this.$router.push("/agentManagement");
           }else if(response.data.data.type == "4"){
             this.$router.push("/expandManagement");
-
           }
         }
         console.log( response, "88888");
       });
     }
-
   }
 };
 </script>
@@ -136,7 +133,7 @@ export default {
       border-radius: 5px;
     }
     &>.select-radio {
-      width: 240px;
+      width: 200px;
       height: 36px;
       line-height: 36px;
       display: inline-block;
@@ -144,7 +141,7 @@ export default {
         margin: 0;
       }
       .mint-cell {
-        width: 120px;
+        width: 100px;
         min-height: 36px;
         line-height: 36px;
         float: left;

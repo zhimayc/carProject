@@ -43,18 +43,13 @@
             <p>已激活：<span>{{cardLists[index].activaNumber}}张</span></p>
             <p>已使用：<span>{{cardLists[index].usedNumber}}%</span></p>
           </div>
-          <div class="list-icon fr">
-            <div @click="downCode"><span>down</span>下载</div>
-            <div><span>人</span>{{cardLists[index].name}}</div>
+          <div class="list-icon">
+            <div class="fr"><img src="../../assets/images/dealer.png"><span class="fr">{{cardLists[index].name}}</span></div>
+            <div class="fr" @click="downCode"><img src="../../assets/images/download-black.png"><span class="fr">下载</span></div>
           </div>
         </li>
       </ul>
     </div>
-    <mt-popup
-      v-model="popupVisible"
-      position="center">
-      <div class="qrcode" ref="qrCodeUrl"></div>
-    </mt-popup>
   </div>
 </template>
 
@@ -69,10 +64,6 @@ export default {
   },
   data() {
     return {
-      value: 0,
-      size: 150,
-      qrcode: null,
-      popupVisible: false,
       discountCardsNum: {}
         /*{
           txt: '总发行量',
@@ -88,30 +79,30 @@ export default {
         }
       ]*/,
       cardLists: [
-        // {
-        //   "activaNumber": 0,
-        //   "couponCardCode": "string",
-        //   "couponNumber": 0,
-        //   "createdDate": "2020-07-02",
-        //   "expireDate": "2020-07-02",
-        //   "faceValue": 0,
-        //   "image": "string",
-        //   "name": "string",
-        //   "promotionUrl": "string",
-        //   "usedNumber": 0
-        // },
-        // {
-        //   "activaNumber": 0,
-        //   "couponCardCode": "string",
-        //   "couponNumber": 0,
-        //   "createdDate": "2020-07-02",
-        //   "expireDate": "2020-07-02",
-        //   "faceValue": 0,
-        //   "image": "string",
-        //   "name": "string",
-        //   "promotionUrl": "string",
-        //   "usedNumber": 0
-        // }
+        {
+          "activaNumber": 0,
+          "couponCardCode": "string",
+          "couponNumber": 0,
+          "createdDate": "2020-07-02",
+          "expireDate": "2020-07-02",
+          "faceValue": 0,
+          "image": "string",
+          "name": "string",
+          "promotionUrl": "string",
+          "usedNumber": 0
+        },
+        {
+          "activaNumber": 0,
+          "couponCardCode": "string",
+          "couponNumber": 0,
+          "createdDate": "2020-07-02",
+          "expireDate": "2020-07-02",
+          "faceValue": 0,
+          "image": "string",
+          "name": "string",
+          "promotionUrl": "string",
+          "usedNumber": 0
+        }
       ]
     };
   },
@@ -203,7 +194,7 @@ export default {
   // 记录列表
   .discount-list{
     li{
-      height: 120px;
+      height: 130px;
       padding: 5px 10px;
       margin-bottom: 10px;
       border-radius: 10px;
@@ -230,7 +221,22 @@ export default {
       .list-icon {
         height: 30px;
         &>div {
-          display: inline;
+          height: 30px;
+          line-height: 30px;
+          &:last-child {
+            margin-right: 10px;
+          }
+          &:first-child span {
+            max-width: 100px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          img {
+            width: 16px;
+            height: 16px;
+            margin: 7px 2px 0 0;
+          }
         }
       }
     }
