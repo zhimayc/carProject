@@ -273,7 +273,7 @@ export default {
   .mint-swipe {
     overflow: hidden;
     position: relative;
-    height: 160px;
+    height: 190px;
     img {
       width: 100%;
       height: 100%;

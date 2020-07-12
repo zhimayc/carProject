@@ -146,7 +146,7 @@ export default {
     top: -30px;
     width: 92%;
     margin: 0 4%;
-    height: 80px;
+    height: 70px;
     background: #ffffff;
     z-index: 999;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.27);
@@ -166,7 +166,7 @@ export default {
   .container-notice-wrap {
     width: 92%;
     margin: 0 4%;
-    height: 50px;
+    height: 45px;
     padding-left: 10px;
     position: relative;
     top: -15px;
@@ -177,8 +177,8 @@ export default {
     display: flex;
     align-items: center;
     img {
-      height: 25px;
-      width: 25px;
+      height: 22px;
+      width: 22px;
     }
     span {
       flex: 1;
@@ -202,8 +202,13 @@ export default {
       span:last-child {
         color: #a4a4a4;
       }
+      &:nth-child(1) img {
+        width: 45px;
+        margin: 7px;
+      }
       &:nth-child(2) img {
         width: 45px;
+        margin: 7px;
       }
       &:nth-child(3) img {
         height: 45px;
