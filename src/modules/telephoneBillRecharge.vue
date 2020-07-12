@@ -74,14 +74,6 @@ export default {
         {
           price: "200",
           reducedPrice: "184"
-        },
-        {
-          price: "300",
-          reducedPrice: "276"
-        },
-        {
-          price: "500",
-          reducedPrice: "460"
         }
       ],
       rechargeList: [],
