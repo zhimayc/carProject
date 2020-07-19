@@ -226,45 +226,60 @@ export default {
     },
     //支付油卡
     payOilCard(){
-      Indicator.open();
-      let oilCardInfo = {cardCode:this.checkCardCode,money:this.checkCardPrice};
-      this.$axios.post("/base/recharg/oil/card",oilCardInfo).then(response => {
+      //先调用 充值判断接口
+      let oilCardInfo2 = {cardCode:this.checkCardCode,money:this.checkCardPrice,"type":1};
+      this.$axios.post("/base/recharg/jude",oilCardInfo2).then(response => {
         if (response.data.retCode == "0") {
-          let orderNumber = response.data.data.orderNumber;
-          try {
-            this.wx.chooseWXPay({
-              timestamp: response.data.data.timeStamp, // 支付签名时间戳，注意微信js sdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-              nonceStr: response.data.data.nonceStr, // 支付签名随机串，不长于 32 位
-              package: 'prepay_id=' + response.data.data.prepay_id, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-              signType: response.data.data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-              paySign: response.data.data.sign, // 支付签名
-              success: function () {
-                this.$router.push("/oilCardRecharge");
-                //this.doWxPayCallback(orderNumber);
-              },
-              fail: function () {
-               // this.doWxPayCallback(orderNumber);
-              },
-              cancel: function () {
-                console.info('取消支付，如需支付请继续。');
+          if(confirm(response.data.data.message) ==true){
+            console.info("------");
+            Indicator.open();
+            let oilCardInfo = {cardCode:this.checkCardCode,money:this.checkCardPrice};
+            this.$axios.post("/base/recharg/oil/card",oilCardInfo).then(response => {
+              if (response.data.retCode == "0") {
+                let orderNumber = response.data.data.orderNumber;
+                try {
+                  this.wx.chooseWXPay({
+                    timestamp: response.data.data.timeStamp, // 支付签名时间戳，注意微信js sdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                    nonceStr: response.data.data.nonceStr, // 支付签名随机串，不长于 32 位
+                    package: 'prepay_id=' + response.data.data.prepay_id, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                    signType: response.data.data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                    paySign: response.data.data.sign, // 支付签名
+                    success: function () {
+                      this.$router.push("/oilCardRecharge");
+                      //this.doWxPayCallback(orderNumber);
+                    },
+                    fail: function () {
+                      // this.doWxPayCallback(orderNumber);
+                    },
+                    cancel: function () {
+                      console.info('取消支付，如需支付请继续。');
+                    }
+                  });
+                } catch (e) {
+                  console.info('订单支付异常, 请稍后重试。');
+                }
+              }else{
+                Toast(response.data.message);
               }
+              //console.log(this.cardList, "999999");
+              Indicator.close();
+            }).catch((error)=>{
+              Toast({
+                message: '服务异常！',
+                duration: 1500,
+                iconClass: "icon icon-success"
+              });
+              Indicator.close();
             });
-          } catch (e) {
-            console.info('订单支付异常, 请稍后重试。');
           }
         }else{
           Toast(response.data.message);
         }
-        //console.log(this.cardList, "999999");
-        Indicator.close();
-      }).catch((error)=>{
-          Toast({
-              message: '服务异常！',
-              duration: 1500,
-              iconClass: "icon icon-success"
-            });
-        Indicator.close();
       });
+
+
+
+
     },
     //查询订单状态
     doWxPayCallback: function (orderNumber) {

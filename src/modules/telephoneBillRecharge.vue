@@ -193,38 +193,53 @@ export default {
     },
     //支付
     payPhone(){
-      Indicator.open();
-      let payPhoneInfo = { phone: this.phone,money:this.checkPriceValue}
-        this.$axios.post("/base/recharg/phone",payPhoneInfo).then(response => {
-          if (response.data.retCode == "0") {
-            //this.$router.push("/homePage");
-            let orderNumber = response.data.data.orderNumber;
-            try {
-              this.wx.chooseWXPay({
-                timestamp: response.data.data.timeStamp, // 支付签名时间戳，注意微信js sdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                nonceStr: response.data.data.nonceStr, // 支付签名随机串，不长于 32 位
-                package: 'prepay_id=' + response.data.data.prepay_id, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-                signType: response.data.data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                paySign: response.data.data.sign, // 支付签名
-                success: function () {
-                  this.$router.push("/telephoneBillRecharge");
-                  // this.doWxPayCallback(orderNumber);
-                },
-                fail: function () {
-                 // this.doWxPayCallback(orderNumber);
-                },
-                cancel: function () {
-                  console.info('取消支付，如需支付请继续。');
+      let payPhoneInfo2 = { phone: this.phone,money:this.checkPriceValue,"type":2}
+      this.$axios.post("/base/recharg/jude",payPhoneInfo2).then(response => {
+        if (response.data.retCode == "0") {
+          if(confirm(response.data.data.message) ==true){
+            Indicator.open();
+            let payPhoneInfo = { phone: this.phone,money:this.checkPriceValue}
+            this.$axios.post("/base/recharg/phone",payPhoneInfo).then(response => {
+              if (response.data.retCode == "0") {
+                //this.$router.push("/homePage");
+                let orderNumber = response.data.data.orderNumber;
+                try {
+                  this.wx.chooseWXPay({
+                    timestamp: response.data.data.timeStamp, // 支付签名时间戳，注意微信js sdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                    nonceStr: response.data.data.nonceStr, // 支付签名随机串，不长于 32 位
+                    package: 'prepay_id=' + response.data.data.prepay_id, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                    signType: response.data.data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                    paySign: response.data.data.sign, // 支付签名
+                    success: function () {
+                      this.$router.push("/telephoneBillRecharge");
+                      // this.doWxPayCallback(orderNumber);
+                    },
+                    fail: function () {
+                      // this.doWxPayCallback(orderNumber);
+                    },
+                    cancel: function () {
+                      console.info('取消支付，如需支付请继续。');
+                    }
+                  });
+                } catch (e) {
+                  console.info('订单支付异常, 请稍后重试。');
                 }
-              });
-            } catch (e) {
-              console.info('订单支付异常, 请稍后重试。');
-            }
-          }else{
-            this.$toast(response.data.message);
+              }else{
+                this.$toast(response.data.message);
+              }
+              Indicator.close();
+            });
           }
-          Indicator.close();
-        });
+        }else{
+          Toast(response.data.message);
+        }
+
+      });
+
+
+
+
+
     },
     doWxPayCallback: function (orderNumber) {
       let taskCount = 0;
