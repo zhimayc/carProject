@@ -55,6 +55,8 @@
 import Header from "../components/header.vue";
 import Bus from "./../common/js/bus.js";
 import { Indicator } from 'mint-ui';
+import { Toast} from 'mint-ui';
+
 export default {
   name: "telephoneBillRecharge",
   path: "/telephoneBillRecharge",
