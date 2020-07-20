@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       baseUserInfo: {},
-      notice: "芝麻油惠招商火热进行中...",
+      notice: "系统维护中，截止时间24号10点。",
       entryList: [
         {
           name: "油卡充值",
