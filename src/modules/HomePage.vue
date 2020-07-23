@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       baseUserInfo: {},
-      notice: "系统维护中，截止时间24号10点。",
+      notice: "系统维护，到账时间稍有延迟...",
       entryList: [
         {
           name: "油卡充值",
