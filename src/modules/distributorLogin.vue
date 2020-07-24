@@ -20,6 +20,7 @@
 <script>
 import Header from "../components/header.vue";
 import Bus from "./../common/js/bus.js";
+import { Toast} from 'mint-ui';
 export default {
   name: "distributorLogin",
   path: "/distributorLogin",
