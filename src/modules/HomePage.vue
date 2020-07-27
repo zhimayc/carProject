@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       baseUserInfo: {},
-      notice: "系统维护，到账时间稍有延迟...",
+      notice: "芝麻油惠，92钜惠...",
       entryList: [
         {
           name: "油卡充值",

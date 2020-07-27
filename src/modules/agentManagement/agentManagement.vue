@@ -5,7 +5,7 @@
       <div class="distributor-info-wrap">
         <span>代理ID:12324354654</span>
          <span>经营区域：湖南省-长沙市-岳麓区</span>
-        <span>返佣点数：35%</span>
+        <span>返佣点数：2%</span>
       </div>
       <div class="distributor-entry-wrap">
         <div
@@ -59,7 +59,7 @@ export default {
           // path: "/customerList"
           path: "/agentList"
         }
-        
+
       ]
     };
   },
