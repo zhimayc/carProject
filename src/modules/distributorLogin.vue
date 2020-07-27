@@ -40,7 +40,6 @@ export default {
   computed: {},
   methods: {
     longin(){
-      Toast("账号密码不能为空！");
       if (this.userName == null && this.password == null){
         Toast("账号密码不能为空！");
       }
