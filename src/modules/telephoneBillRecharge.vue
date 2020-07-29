@@ -43,7 +43,7 @@
             <span>{{item.account}}</span>
             <span>{{item.createdDate}}</span>
             <span>{{item.money}}元</span>
-            <span>{{item.status=="1"?"充值中":"已到账"}}</span>
+            <span>{{item.status=="1"?"充值中":(item.status=="2"?"已到账":(item.status=="3"?"已提交":"已退款"))}}</span>
           </li>
         </ul>
       </div>
@@ -303,7 +303,7 @@ export default {
     .money-item-active{
       background:#fbec96;
     }
-    
+
   }
 }
 </style>
