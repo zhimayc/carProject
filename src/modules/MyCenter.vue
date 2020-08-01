@@ -99,7 +99,7 @@ export default {
     toItemPage(item){
       if(item.enterType=='3'){
         console.log("1111")
-        window.open("https://www.zhimayc.com/");
+        // window.open("https://www.zhimayc.com/");
       }else{
         this.$router.push(item.path)
       }
